@@ -5,7 +5,7 @@ pipeline {
         REGISTRY = "anildockerpractice"
         IMAGENAME = "myubuntu"
         IMAGETAG = "latest"
-		DOCKERHUB_CREDENTIALS = "mydocker-credentials"
+	DOCKERHUB_CREDENTIALS = "mydocker-credentials"
     }
 	
     stages {
