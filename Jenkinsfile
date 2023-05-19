@@ -4,7 +4,7 @@ pipeline {
         registry  = "anildockerpractice"
         imageName  = "myubuntu"
         imageTag  = "latest"  
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub_jenkins')  
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub_jenkins')  
         }
 	
     stages {
