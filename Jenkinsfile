@@ -12,14 +12,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t $registry/$imageName:$imageTag .'
+                sh ' sudo docker build -t $registry/$imageName:$imageTag .'
             }
         }
         
         stage('Publish') {
             steps {
-                    sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
-                    sh 'docker push $registry/$imageName:$imageTag'
+                    sh 'sudo docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
+                    sh 'sudo docker push $registry/$imageName:$imageTag'
                 
             }
         }
