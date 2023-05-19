@@ -4,7 +4,6 @@ pipeline {
         REGISTRY = "anildockerpractice"
         IMAGENAME = "myubuntu"
         IMAGETAG = "latest"
-	DOCKERHUB_CREDENTIALS = "mydocker-credentials"
         }
 	
     stages {
@@ -16,7 +15,7 @@ pipeline {
         
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId: '$DOCKERHUB_CREDENTIALS', url: " "]) {
+                withDockerRegistry([credentialsId: 'docker-credentials', url: "https://hub.docker.com/u/anildockerpractice"]) {
                     sh 'docker push $REGISTRY/$IMAGENAME:$IMAGETAG'
                 }
             }
