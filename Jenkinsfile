@@ -15,7 +15,7 @@ pipeline {
         
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId:'docker-credentials', url: registry ]) {
+                withDockerRegistry([credentialsId: 'jenkins-docker-credentials', url: registry ]) {
                     sh 'docker push $registry/$imageName:$imageTag'
                 }
             }
