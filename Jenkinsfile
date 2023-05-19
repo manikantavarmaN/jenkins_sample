@@ -15,7 +15,7 @@ pipeline {
         
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId: 'jenkins-docker-credentials', url: registry ]) {
+                withDockerRegistry([credentialsId: 'jenkins-docker-credentials', url: http://anildockerpractice ]) {
                     sh 'docker push $registry/$imageName:$imageTag'
                 }
             }
