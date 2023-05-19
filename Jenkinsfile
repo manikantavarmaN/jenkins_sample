@@ -15,7 +15,7 @@ pipeline {
         
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-credentials', url: " "]) {
+                withDockerRegistry([credentialsId: 'docker-credentials', url: "https://hub.docker.com/u/anildockerpractice"]) {
                     sh 'docker push $REGISTRY/$IMAGENAME:$IMAGETAG'
                 }
             }
