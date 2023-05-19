@@ -3,25 +3,30 @@ pipeline {
     environment {
         registry  = "anildockerpractice"
         imageName  = "myubuntu"
-        imageTag  = "latest"
-	DOCKERHUB_USERNAME = "anildockerpractice"
-	DOCKERHUB_PASSWORD = "Anil@docker123"
-	    
+        imageTag  = "latest"  
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub_jenkins')  
         }
 	
     stages {
         stage('Build') {
             steps {
-                sh ' sudo docker build -t $registry/$imageName:$imageTag .'
+                sh 'docker build -t $registry/$imageName:$imageTag .'
             }
         }
-        
-        stage('Publish') {
+        stage('Login') {
             steps {
-                    sh 'sudo docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
-                    sh 'sudo docker push $registry/$imageName:$imageTag'
-                
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
+        }
+        stage('Push') {
+            steps {
+                sh 'docker push $registry/$imageName:$imageTag'
+            }
+        }
+    }
+    post {
+        always {
+            sh ' docker logout'
         }
     }
 }
