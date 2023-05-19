@@ -4,6 +4,9 @@ pipeline {
         registry  = "anildockerpractice"
         imageName  = "myubuntu"
         imageTag  = "latest"
+	DOCKERHUB_USERNAME = "anildockerpractice"
+	DOCKERHUB_PASSWORD = "Anil@docker123"
+	    
         }
 	
     stages {
@@ -15,9 +18,9 @@ pipeline {
         
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId: 'jenkins-docker-credentials', url: 'http://anildockerpractice']) {
+                    sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
                     sh 'docker push $registry/$imageName:$imageTag'
-                }
+                
             }
         }
     }
