@@ -1,22 +1,22 @@
 pipeline {
     agent any
     environment {
-        REGISTRY = "anildockerpractice"
-        IMAGENAME = "myubuntu"
-        IMAGETAG = "latest"
+        registry  = "anildockerpractice"
+        imageName  = "myubuntu"
+        imageTag  = "latest"
         }
 	
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t $REGISTRY/$IMAGENAME:$IMAGETAG .'
+                sh 'docker build -t $registry/$imageName:$imageTag .'
             }
         }
         
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-credentials', url: "REGISTRY"]) {
-                    sh 'docker push $REGISTRY/$IMAGENAME:$IMAGETAG'
+                withDockerRegistry([credentialsId: 'docker-credentials', url: registry]) {
+                    sh 'docker push $registry/$imageName:$imageTag'
                 }
             }
         }
