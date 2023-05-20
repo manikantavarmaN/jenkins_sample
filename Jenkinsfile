@@ -15,6 +15,7 @@ pipeline {
     stages {
         stage('gitclone') {
             steps {
+               sh 'rm -rf jenkins_sample'
                sh 'git clone -b $Branch "https://github.com/anilgitpractice/jenkins_sample.git"'
             }
         }
