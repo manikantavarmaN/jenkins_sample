@@ -38,7 +38,7 @@ pipeline {
                         // Additional dev-specific steps
                         // Execute Docker commands
                         sh 'docker pull $registry/$imageName:$imageTag'
-                        sh 'docker run -p 8080:8080 -i $registry/$imageName:$imageTag'
+                        sh 'docker run $registry/$imageName:$imageTag'
 
 
                     } else if (params.ENVIRONMENT == 'prod') {
