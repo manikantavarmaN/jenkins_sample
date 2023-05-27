@@ -49,11 +49,7 @@ pipeline {
              steps {
                 // Copy the .jar file to the remote machine using SSH
                 // Replace the placeholders with your actual remote machine details
-                sshagent(['35.91.117.57']) {
-                    sh 'scp /home/ubuntu/samplejava/HelloWorld.jar ubuntu@35.91.117.57:/home/ubuntu/samplejava/'
-                    sh 'java -jar HelloWorld.jar'
-                }
-            }
+               
 
 
                     } else {
