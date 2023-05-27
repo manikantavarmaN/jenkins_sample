@@ -46,9 +46,14 @@ pipeline {
                         // Deploy to prod environment
                         sh 'echo "Deploying to prod environment"'
                         // Additional prod-specific steps
-                        sh 'scp /home/ubuntu/samplejava/HelloWorld.jar ubuntu@35.91.117.57:/home/ubuntu/samplejava/'
-                        sh 'ssh -v ubuntu@35.91.117.57'
-                        sh 'java -jar HelloWorld.jar'
+             steps {
+                // Copy the .jar file to the remote machine using SSH
+                // Replace the placeholders with your actual remote machine details
+                sshagent(['35.91.117.57']) {
+                    sh 'scp /home/ubuntu/samplejava/HelloWorld.jar ubuntu@35.91.117.57:/home/ubuntu/samplejava/'
+                    sh 'java -jar HelloWorld.jar'
+                }
+            }
 
 
                     } else {
