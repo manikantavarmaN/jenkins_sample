@@ -46,6 +46,9 @@ pipeline {
                         // Deploy to prod environment
                         sh 'echo "Deploying to prod environment"'
                         // Additional prod-specific steps
+                        sh 'scp /home/ubuntu/samplejava/HelloWorld.jar ubuntu@35.91.117.57:/home/ubuntu/samplejava/'
+                        sh 'ssh -v ubuntu@35.91.117.57'
+                        sh 'java -jar HelloWorld.jar'
 
 
                     } else {
