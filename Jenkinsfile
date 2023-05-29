@@ -57,7 +57,8 @@ pipeline {
             steps {
                 // Your JAR deployment steps for the PROD environment
                 // Replace the placeholders with your actual commands
-                sh 'ssh -o StrictHostKeyChecking=no -v ubuntu@54.189.215.165'
+                sh 'ssh-keygen -R 54.189.215.165'
+                sh 'ssh -v ubuntu@54.189.215.165'
                 sh 'scp /home/ubuntu/samplejava/HelloWorld.jar ubuntu@54.189.215.165:/home/ubuntu/samplejava/'
                 sh 'java -jar HelloWorld.jar'
             }
