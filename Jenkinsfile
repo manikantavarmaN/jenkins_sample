@@ -57,8 +57,8 @@ pipeline {
             steps {
                 // Your JAR deployment steps for the PROD environment
                 // Replace the placeholders with your actual commands
-                sh 'scp myapp.jar user@remote-host:/path/to/destination'
-                sh 'ssh user@remote-host "systemctl restart myapp"'
+                sh 'scp /home/ubuntu/samplejava/HelloWorld.jar ubuntu@54.189.215.165:/home/ubuntu/samplejava/'
+                sh 'java -jar HelloWorld.jar'
             }
         }
     }
