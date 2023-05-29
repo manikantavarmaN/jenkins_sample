@@ -55,15 +55,7 @@ pipeline {
                 expression { params.ENVIRONMENT == 'prod' }
             }
             steps {
-                // Your JAR deployment steps for the PROD environment
-                // Replace the placeholders with your actual commands
-                sh 'ssh-keygen -R 54.189.215.165'
-                // Establishing connection
-                sh 'ssh -v ubuntu@54.189.215.165'
-                // Copy the file from local to remot server
-                sh 'scp /home/ubuntu/samplejava/HelloWorld.jar ubuntu@54.189.215.165:/home/ubuntu/samplejava/'
-                // Run the java application
-                sh 'java -jar HelloWorld.jar'
+                
             }
         }
     }
