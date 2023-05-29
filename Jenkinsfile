@@ -1,17 +1,19 @@
 pipeline {
     agent any
-    
-    parameters {
-        choice(name: 'ENVIRONMENT', choices: ['dev', 'prod'], description: 'Select the environment')
-    }
 
+    parameters {
+        choice(
+            choices: 'prod\ndev',
+            description: 'Select the target environment',
+            name: 'ENVIRONMENT'
+        )
+    }
     environment {
-        registry  = "anildockerpractice"
-        imageName  = "myubuntu"
-        imageTag  = "latest"  
-        DOCKERHUB_CREDENTIALS=credentials('dockerhub_id')  
-        }
-    
+        registry = "anildockerpractice"
+        imageName = "myubuntu"
+        imageTag  = "latest"
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub_id')
+    }
     stages {
         stage('gitclone') {
             steps {
@@ -19,43 +21,44 @@ pipeline {
                sh 'git clone -b $Branch "https://github.com/anilgitpractice/jenkins_sample.git"'
             }
         }
-        stage('Build') {
+    
+    
+        stage('Build and Push Docker Image') {
+            when {
+                expression { params.ENVIRONMENT == 'dev' }
+            }
             steps {
-                // Perform build steps
-               sh 'docker build -t $registry/$imageName:$imageTag .'
-               sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-               sh 'docker push $registry/$imageName:$imageTag'
+                // Your Docker build and push steps for the DEV environment
+                sh 'docker build -t $registry/$imageName:$imageTag .'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push $registry/$imageName:$imageTag'
+                
             }
         }
-        
-        
-        
-        stage('Deploy') {
+
+        stage('Deploy Docker Container') {
+            when {
+                expression { params.ENVIRONMENT == 'dev' }
+            }
             steps {
-                script {
-                    if (params.ENVIRONMENT == 'dev') {
-                        // Deploy to dev environment
-                        sh 'echo "Deploying to dev environment"'
-                        // Additional dev-specific steps
-                        // Execute Docker commands
-                        sh 'docker pull $registry/$imageName:$imageTag'
-                        sh 'docker run $registry/$imageName:$imageTag'
+                // Your Docker deployment steps for the DEV environment
+                // Replace the placeholders with your actual commands
+                sh 'docker stop $imageName:$imageTag || true'
+                sh 'docker rm $imageName:$imageTag || true'
+                sh 'docker run $registry/$imageName:$imageTag'
+              
+            }
+        }
 
-
-                    } else if (params.ENVIRONMENT == 'prod') {
-                        // Deploy to prod environment
-                        sh 'echo "Deploying to prod environment"'
-                        // Additional prod-specific steps
-             steps {
-                // Copy the .jar file to the remote machine using SSH
-                // Replace the placeholders with your actual remote machine details
-               
-
-
-                    } else {
-                        error "Invalid environment selected"
-                    }
-                }
+        stage('Deploy JAR Files') {
+            when {
+                expression { params.ENVIRONMENT == 'prod' }
+            }
+            steps {
+                // Your JAR deployment steps for the PROD environment
+                // Replace the placeholders with your actual commands
+                sh 'scp myapp.jar user@remote-host:/path/to/destination'
+                sh 'ssh user@remote-host "systemctl restart myapp"'
             }
         }
     }
