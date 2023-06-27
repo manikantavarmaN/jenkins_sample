@@ -43,9 +43,9 @@ pipeline {
                      
                     def imageFullName = "${registry}/${params.CONTAINER}:${imageTag}"
                     echo imageFullName
-                    def path = "jenkins_sample"+{params.BRANCH}
-                    echo path
-                    cd path
+                    //def path = "jenkins_sample"+{params.BRANCH}
+                    //echo path
+                   // cd path
                     docker.build(imageFullName)
                     
                     // for (def imageName in params.imageNames) {
